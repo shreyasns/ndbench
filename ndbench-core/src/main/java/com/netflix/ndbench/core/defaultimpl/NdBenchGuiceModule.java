@@ -16,6 +16,7 @@
  */
 package com.netflix.ndbench.core.defaultimpl;
 
+import com.netflix.ndbench.core.discovery.*;
 import org.slf4j.LoggerFactory;
 
 import com.google.inject.AbstractModule;
@@ -26,10 +27,6 @@ import com.netflix.ndbench.api.plugin.NdBenchMonitor;
 import com.netflix.ndbench.api.plugin.common.NdBenchConstants;
 import com.netflix.ndbench.core.config.IConfiguration;
 import com.netflix.ndbench.core.config.NdbenchConfigListener;
-import com.netflix.ndbench.core.discovery.AWSLocalClusterDiscovery;
-import com.netflix.ndbench.core.discovery.CfClusterDiscovery;
-import com.netflix.ndbench.core.discovery.IClusterDiscovery;
-import com.netflix.ndbench.core.discovery.LocalClusterDiscovery;
 import com.netflix.ndbench.core.generators.DefaultDataGenerator;
 import com.netflix.ndbench.core.monitoring.FakeMonitor;
 
@@ -49,6 +46,8 @@ public class NdBenchGuiceModule extends AbstractModule {
             bind(IClusterDiscovery.class).to(CfClusterDiscovery.class);
         } else if (discoveryEnv != null && discoveryEnv.equals(NdBenchConstants.DISCOVERY_ENV_AWS)) {
             bind(IClusterDiscovery.class).to(AWSLocalClusterDiscovery.class);
+        } else if(discoveryEnv != null && discoveryEnv.equals(NdBenchConstants.DISCOVERY_ENV_CONFIG)){
+            bind(IClusterDiscovery.class).to(ConfigFileDiscovery.class);
         } else {
             bind(IClusterDiscovery.class).to(LocalClusterDiscovery.class);
         }
