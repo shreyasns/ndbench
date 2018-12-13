@@ -13,3 +13,11 @@ CREATE TABLE IF NOT EXISTS dev1.emp (key text, column1 int, value text, PRIMARY 
 //CassJavaDriverBatch Plugin
 CREATE TABLE IF NOT EXISTS dev1.emp (cyclist_name text, expense_id int, amount float, balance float static, description text, paid boolean, PRIMARY KEY (cyclist_name, expense_id)) WITH CLUSTERING ORDER BY (expense_id ASC)
 CREATE TABLE IF NOT EXISTS dev1.test2 (expense_id int, cyclist_name text, PRIMARY KEY (expense_id, cyclist_name)) WITH CLUSTERING ORDER BY (cyclist_name ASC)
+
+create KEYSPACE IF not exists feeds_poc WITH REPLICATION = { 'class' : 'NetworkTopologyStrategy', 'us-east' : 3 };
+
+
+create table IF NOT EXISTS feeds_poc.feeds (
+fiid long primary key,
+data text
+)
